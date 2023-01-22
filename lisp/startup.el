@@ -519,9 +519,7 @@ DIRS are relative."
                                        "/_emacs"
                                      "/.emacs")))))
       emacs-d-dir)
-     ((file-exists-p xdg-dir)
-      xdg-dir)
-     (t emacs-d-dir))))
+     (t xdg-dir))))
 
 (defvar native-comp-eln-load-path)
 (defvar native-comp-jit-compilation)
