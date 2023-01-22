@@ -496,6 +496,8 @@ DIRS are relative."
 
 ;; The default location for XDG-convention Emacs init files.
 (defconst startup--xdg-config-default "~/.config/emacs/")
+(defconst startup--xdg-cache-default "~/.cache/emacs/")
+(defconst startup--xdg-state-default "~/.local/state/emacs/")
 ;; The location for XDG-convention Emacs init files.
 (defvar startup--xdg-config-home-emacs)
 
@@ -542,7 +544,7 @@ the updated value."
   (setq native-comp-eln-load-path (cdr native-comp-eln-load-path))
   ;; Add the new eln-cache.
   (push (expand-file-name (file-name-as-directory cache-directory)
-                          user-emacs-directory)
+                          user-cache-directory)
         native-comp-eln-load-path))
 
 (defun startup--update-eln-cache ()
@@ -581,8 +583,22 @@ It is the default value of the variable `top-level'."
 	    (if xdg-config-home
 		(concat xdg-config-home "/emacs/")
 	      startup--xdg-config-default)))
+    (setq startup--xdg-cache-home-emacs
+	  (let ((xdg-cache-home (getenv-internal "XDG_CACHE_HOME")))
+	    (if xdg-cache-home
+		(concat xdg-cache-home "/emacs/")
+	      startup--xdg-cache-default)))
+    (setq startup--xdg-state-home-emacs
+	  (let ((xdg-state-home (getenv-internal "XDG_STATE_HOME")))
+	    (if xdg-state-home
+		(concat xdg-state-home "/emacs/")
+	      startup--xdg-state-default)))
     (setq user-emacs-directory
 	  (startup--xdg-or-homedot startup--xdg-config-home-emacs nil))
+    (setq user-cache-directory
+	  (startup--xdg-or-homedot startup--xdg-cache-home-emacs nil))
+    (setq user-state-directory
+	  (startup--xdg-or-homedot startup--xdg-state-home-emacs nil))
 
     (when (featurep 'native-compile)
       (unless (native-comp-available-p)
@@ -599,7 +615,7 @@ It is the default value of the variable `top-level'."
           (dolist (path (split-string path-env path-separator))
             (unless (string= "" path)
               (push path native-comp-eln-load-path)))))
-      (push (expand-file-name "eln-cache/" user-emacs-directory)
+      (push (expand-file-name "eln-cache/" user-cache-directory)
             native-comp-eln-load-path))
 
     ;; Look in each dir in load-path for a subdirs.el file.  If we

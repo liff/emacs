@@ -4259,6 +4259,16 @@ mode.")
 Various programs in Emacs store information in this directory.
 Note that this should end with a directory separator.
 See also `locate-user-emacs-file'.")
+
+(defvar user-cache-directory
+  ;; The value does not matter since Emacs sets this at startup.
+  nil
+  "Directory for Emacs cache files.")
+
+(defvar user-state-directory
+  ;; The value does not matter since Emacs sets this at startup.
+  nil
+  "Directory for Emacs state files.")
 
 ;;;; Misc. useful functions.
 
