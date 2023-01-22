@@ -220,7 +220,7 @@ Defaults to a regexp ignoring all inputs of 0, 1, or 2 letters."
 If there is a process already running in `*scheme*', switch to that buffer.
 With argument, allows you to edit the command line (default is value
 of `scheme-program-name').
-If the file `~/.emacs_SCHEMENAME' or `~/.emacs.d/init_SCHEMENAME.scm' exists,
+If the file `~/.emacs_SCHEMENAME' or `<user-emacs-directory>/init_SCHEMENAME.scm' exists,
 it is given as initial input.
 Note that this may lose due to a timing error if the Scheme processor
 discards input when it starts up.

@@ -27,7 +27,7 @@
 ;; Many editors (e.g. Vim) have the feature of saving minibuffer
 ;; history to an external file after exit.  This package provides the
 ;; same feature in Emacs.  When set up, it saves recorded minibuffer
-;; histories to a file (`~/.emacs.d/history' by default).  Additional
+;; histories to a file (`<user-emacs-directory>/history' by default).  Additional
 ;; variables may be specified by customizing
 ;; `savehist-additional-variables'.
 

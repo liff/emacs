@@ -34,8 +34,8 @@
 ;;
 ;; Creating:
 ;;
-;; ;; Open a new store associated with ~/.emacs.d/auth.plist.
-;; (setq store (plstore-open (expand-file-name "~/.emacs.d/auth.plist")))
+;; ;; Open a new store associated with <user-emacs-directory>/auth.plist.
+;; (setq store (plstore-open (locate-user-emacs-file "auth.plist")))
 ;; ;; Both `:host' and `:port' are public property.
 ;; (plstore-put store "foo" '(:host "foo.example.org" :port 80) nil)
 ;; ;; No encryption will be needed.
@@ -48,7 +48,7 @@
 ;; ;; Those secret properties are encrypted together.
 ;; (plstore-save store)
 ;;
-;; ;; Kill the buffer visiting ~/.emacs.d/auth.plist.
+;; ;; Kill the buffer visiting <user-emacs-directory>/auth.plist.
 ;; (plstore-close store)
 ;;
 ;; Avoid marking one property both as public *and* secret, as the
@@ -57,7 +57,7 @@
 ;;
 ;; Searching:
 ;;
-;; (setq store (plstore-open (expand-file-name "~/.emacs.d/auth.plist")))
+;; (setq store (plstore-open (locate-user-emacs-file "auth.plist")))
 ;;
 ;; ;; As the entry "foo" associated with "foo.example.org" has no
 ;; ;; secret properties, no need for decryption.
