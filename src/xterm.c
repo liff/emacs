@@ -30495,7 +30495,12 @@ x_term_init (Lisp_Object display_name, char *xrm_option, char *resource_name)
 #ifndef HAVE_GTK3
         /* Load our own gtkrc if it exists.  */
         {
-          const char *file = "~/.emacs.d/gtkrc";
+          char file[PATH_MAX];
+          const char *xdg_config_home = getenv ("XDG_CONFIG_HOME");
+          if (xdg_config_home)
+            snprintf(file, sizeof(file), "%s/emacs/gtkrc", xdg_config_home);
+          else
+            snprintf(file, sizeof(file), "~/.emacs.d/gtkrc");
           Lisp_Object s, abs_file;
 
           s = build_string (file);
