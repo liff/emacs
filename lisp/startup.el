@@ -516,9 +516,7 @@ DIRS are relative."
                                        "/_emacs"
                                      "/.emacs")))))
       emacs-d-dir)
-     ((file-exists-p xdg-dir)
-      xdg-dir)
-     (t emacs-d-dir))))
+     (t xdg-dir))))
 
 (defvar comp--compilable)
 (defvar comp--delayed-sources)
