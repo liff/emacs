@@ -4724,7 +4724,7 @@ Run an inferior Scheme process, input and output via buffer `*scheme*'.
 If there is a process already running in `*scheme*', switch to that buffer.
 With argument, allows you to edit the command line (default is value
 of `scheme-program-name').
-If the file `~/.emacs_SCHEMENAME' or `~/.emacs.d/init_SCHEMENAME.scm' exists,
+If the file `~/.emacs_SCHEMENAME' or `<user-emacs-directory>/init_SCHEMENAME.scm' exists,
 it is given as initial input.
 Note that this may lose due to a timing error if the Scheme processor
 discards input when it starts up.
@@ -29059,7 +29059,7 @@ Program used comes from variable `explicit-shell-file-name',
  or (if that is nil) from `shell-file-name'.
 Non-interactively, it can also be specified via the FILE-NAME arg.
 
-If a file `~/.emacs_SHELLNAME' exists, or `~/.emacs.d/init_SHELLNAME.sh',
+If a file `~/.emacs_SHELLNAME' exists, or `<user-emacs-directory>/init_SHELLNAME.sh',
 it is given as initial input (but this may be lost, due to a timing
 error, if the shell discards input when it starts up).
 The buffer is put in Shell mode, giving commands for sending input

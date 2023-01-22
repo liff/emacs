@@ -44,7 +44,7 @@
 (defcustom semanticdb-default-save-directory
   (locate-user-emacs-file "semanticdb" ".semanticdb")
   "Directory name where semantic cache files are stored.
-By default, it is either ~/.emacs.d/semanticdb, or ~/.semanticdb depending
+By default, it is either <user-emacs-directory>/semanticdb, or ~/.semanticdb depending
 on which exists.
 If this value is nil, files are saved in the current directory.  If the value
 is a valid directory, then it overrides `semanticdb-default-file-name' and

@@ -60,7 +60,7 @@
 ;;
 ;; * Download.  Fetching the package from ELPA.
 ;; * Install.  Untar the package, or write the .el file, into
-;;   ~/.emacs.d/elpa/ directory.
+;;   `<user-emacs-directory>/elpa/` directory.
 ;; * Autoload generation.
 ;; * Byte compile.  Currently this phase is done during install,
 ;;   but we may change this.

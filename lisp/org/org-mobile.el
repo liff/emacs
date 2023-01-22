@@ -121,7 +121,7 @@ Note that, when Org runs the encryption commands, the password could
 be visible briefly on your system with the `ps' command.  So this method is
 only intended to keep the files secure on the server, not on your own machine.
 
-Also, if you set this variable in an init file (.emacs or .emacs.d/init.el
+Also, if you set this variable in an init file (.emacs or <user-emacs-directory>/init.el
 or custom.el...) and if that file is stored in a way so that other can read
 it, this also limits the security of this approach.  You can also leave
 this variable empty - Org will then ask for the password once per Emacs

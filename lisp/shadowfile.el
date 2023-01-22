@@ -105,7 +105,7 @@ files that have been changed and need to be copied to other systems."
 (defcustom shadow-info-file (locate-user-emacs-file "shadows" ".shadows")
   "File to keep shadow information in.
 The `shadow-info-file' should be shadowed to all your accounts to
-ensure consistency.  Default: ~/.emacs.d/shadows"
+ensure consistency.  Default: <user-emacs-directory>/shadows"
   :type 'file
   :version "26.2")
 
@@ -116,7 +116,7 @@ This means that if a remote system is down, or for any reason you cannot or
 decide not to copy your shadow files at the end of one Emacs session, it will
 remember and ask you again in your next Emacs session.
 This file must NOT be shadowed to any other system, it is host-specific.
-Default: ~/.emacs.d/shadow_todo"
+Default: <user-emacs-directory>/shadow_todo"
   :type 'file
   :version "26.2")
 

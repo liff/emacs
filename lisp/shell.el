@@ -844,7 +844,7 @@ Program used comes from variable `explicit-shell-file-name',
  or (if that is nil) from `shell-file-name'.
 Non-interactively, it can also be specified via the FILE-NAME arg.
 
-If a file `~/.emacs_SHELLNAME' exists, or `~/.emacs.d/init_SHELLNAME.sh',
+If a file `~/.emacs_SHELLNAME' exists, or `<user-emacs-directory>/init_SHELLNAME.sh',
 it is given as initial input (but this may be lost, due to a timing
 error, if the shell discards input when it starts up).
 The buffer is put in Shell mode, giving commands for sending input

@@ -5082,7 +5082,7 @@ BACKUPNAME is the backup file name, which is the old file renamed."
 		    (dolist (old-version old-versions)
 		      (delete-file old-version)))
 		(file-error nil))
-	      ;; If trouble writing the backup, write it in .emacs.d/%backup%.
+	      ;; If trouble writing the backup, write it in <user-emacs-directory>/%backup%.
 	      (when (not buffer-backed-up)
 		(setq backupname (locate-user-emacs-file "%backup%~"))
 		(message "Cannot write backup file; backing up in %s"
