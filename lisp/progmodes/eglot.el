@@ -611,6 +611,7 @@ It is nil if Eglot is not byte-complied.")
       (Range (:start :end))
       (Registration (:id :method) (:registerOptions))
       (ResponseError (:code :message) (:data))
+      (SelectionRange (:range :parent))
       (ShowMessageParams (:type :message))
       (ShowMessageRequestParams (:type :message) (:actions))
       (SignatureHelp (:signatures) (:activeSignature :activeParameter))
@@ -975,7 +976,8 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
                                        :tagSupport
                                        `(:valueSet
                                          [,@(mapcar
-                                             #'car eglot--tag-faces)])))
+                                             #'car eglot--tag-faces)]))
+             :selectionRange `(:dynamicRegistration :json-false))
             :window `(:showDocument (:support t)
                       :workDoneProgress t)
             :general (list :positionEncodings ["utf-32" "utf-8" "utf-16"])
@@ -3606,6 +3608,23 @@ edit proposed by the server."
           (t
            (let ((boftap (bounds-of-thing-at-point 'sexp)))
              (list (car boftap) (cdr boftap)))))))
+
+(defun eglot-expand-region ()
+  "Expands the current region using `:textDocument/selectionRange', if possible."
+  (interactive)
+  (unless (eglot--server-capable :selectionRangeProvider)
+    (eglot--error "This LSP server isn't a :selectionRangeProvider"))
+  (pcase (jsonrpc-request (eglot--current-server-or-lose)
+			  :textDocument/selectionRange
+			  `(:textDocument ,(eglot--TextDocumentIdentifier)
+                            :positions ,(vector (eglot--pos-to-lsp-position))))
+    (`[,selection-range]
+     (when-let ((new-range (eglot--next-range selection-range)))
+       (pcase-let ((`(,beg . ,end) new-range))
+	 (goto-char beg)
+	 (set-mark (point))
+	 (goto-char end)
+	 (exchange-point-and-mark))))))
 
 (defun eglot-code-actions (beg &optional end action-kind interactive)
   "Find LSP code actions of type ACTION-KIND between BEG and END.
