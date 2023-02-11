@@ -474,6 +474,7 @@ This can be useful when using docker to run a language server.")
       (Range (:start :end))
       (Registration (:id :method) (:registerOptions))
       (ResponseError (:code :message) (:data))
+      (SelectionRange (:range :parent))
       (ShowMessageParams (:type :message))
       (ShowMessageRequestParams (:type :message) (:actions))
       (SignatureHelp (:signatures) (:activeSignature :activeParameter))
@@ -823,7 +824,8 @@ treated as in `eglot--dbind'."
                                        :tagSupport
                                        `(:valueSet
                                          [,@(mapcar
-                                             #'car eglot--tag-faces)])))
+                                             #'car eglot--tag-faces)]))
+             :selectionRange `(:dynamicRegistration :json-false))
             :window `(:workDoneProgress t)
             :general (list :positionEncodings ["utf-32" "utf-8" "utf-16"])
             :experimental eglot--{})))
@@ -3313,6 +3315,35 @@ Returns a list as described in docstring of `imenu--index-alist'."
                     :textDocument/rename `(,@(eglot--TextDocumentPositionParams)
                                            :newName ,newname))
    current-prefix-arg))
+
+(defun eglot--next-range (selection-range)
+  "Searches SELECTION-RANGE for a range that is larger than
+the current region. Returns nil if no such range is available."
+  (eglot--dbind ((SelectionRange) range parent) selection-range
+    (pcase-let ((`(,beg . ,end) (eglot--range-region range)))
+      (cond
+       ((and ; LSP range is smaller or the same than the current region
+	 (>= beg (region-beginning))
+	 (<= end (region-end)))
+	(when parent (eglot--next-range parent)))
+       (t (cons beg end))))))
+
+(defun eglot-expand-region ()
+  "Expands the current region using `:textDocument/selectionRange', if possible."
+  (interactive)
+  (unless (eglot--server-capable :selectionRangeProvider)
+    (eglot--error "This LSP server isn't a :selectionRangeProvider"))
+  (pcase (jsonrpc-request (eglot--current-server-or-lose)
+			  :textDocument/selectionRange
+			  `(:textDocument ,(eglot--TextDocumentIdentifier)
+                            :positions ,(vector (eglot--pos-to-lsp-position))))
+    (`[,selection-range]
+     (when-let ((new-range (eglot--next-range selection-range)))
+       (pcase-let ((`(,beg . ,end) new-range))
+	 (goto-char beg)
+	 (set-mark (point))
+	 (goto-char end)
+	 (exchange-point-and-mark))))))
 
 (defun eglot--region-bounds ()
   "Region bounds if active, else bounds of things at point."
